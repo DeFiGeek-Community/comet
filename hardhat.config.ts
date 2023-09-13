@@ -43,11 +43,11 @@ const {
   COINMARKETCAP_API_KEY,
   ETH_PK = '',
   ETHERSCAN_KEY,
-  SNOWTRACE_KEY,
-  POLYGONSCAN_KEY,
-  ARBISCAN_KEY,
-  BASESCAN_KEY,
-  LINEASCAN_KEY,
+  // SNOWTRACE_KEY,
+  // POLYGONSCAN_KEY,
+  // ARBISCAN_KEY,
+  // BASESCAN_KEY,
+  // LINEASCAN_KEY,
   INFURA_KEY,
   QUICKNODE_KEY,
   MNEMONIC = 'myth like bonus scare over problem client lizard pioneer submit female collect',
@@ -74,11 +74,11 @@ export function requireEnv(varName, msg?: string): string {
 // required environment variables
 [
   'ETHERSCAN_KEY',
-  'SNOWTRACE_KEY',
+  // 'SNOWTRACE_KEY',
   'INFURA_KEY',
-  'POLYGONSCAN_KEY',
-  'ARBISCAN_KEY',
-  'LINEASCAN_KEY'
+  // 'POLYGONSCAN_KEY',
+  // 'ARBISCAN_KEY',
+  // 'LINEASCAN_KEY'
 ].map(v => requireEnv(v));
 
 // Networks
@@ -214,21 +214,21 @@ const config: HardhatUserConfig = {
       rinkeby: ETHERSCAN_KEY,
       goerli: ETHERSCAN_KEY,
       // Avalanche
-      avalanche: SNOWTRACE_KEY,
-      avalancheFujiTestnet: SNOWTRACE_KEY,
+      // avalanche: SNOWTRACE_KEY,
+      // avalancheFujiTestnet: SNOWTRACE_KEY,
       // Polygon
-      polygon: POLYGONSCAN_KEY,
-      polygonMumbai: POLYGONSCAN_KEY,
+      // polygon: POLYGONSCAN_KEY,
+      // polygonMumbai: POLYGONSCAN_KEY,
       // Arbitrum
-      arbitrumOne: ARBISCAN_KEY,
-      arbitrumTestnet: ARBISCAN_KEY,
-      arbitrum: ARBISCAN_KEY,
-      'arbitrum-goerli': ARBISCAN_KEY,
+      // arbitrumOne: ARBISCAN_KEY,
+      // arbitrumTestnet: ARBISCAN_KEY,
+      // arbitrum: ARBISCAN_KEY,
+      // 'arbitrum-goerli': ARBISCAN_KEY,
       // Base
-      base: BASESCAN_KEY,
-      'base-goerli': BASESCAN_KEY,
+      // base: BASESCAN_KEY,
+      // 'base-goerli': BASESCAN_KEY,
       // Linea
-      'linea-goerli': LINEASCAN_KEY,
+      // 'linea-goerli': LINEASCAN_KEY,
     },
     customChains: [
       {
