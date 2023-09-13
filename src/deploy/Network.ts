@@ -1,3 +1,4 @@
+import { FaucetToken, SimplePriceFeed } from '../../build/types';
 import { Deployed, DeploymentManager } from '../../plugins/deployment_manager';
 import { DeploySpec, ProtocolConfiguration, wait, COMP_WHALES } from './index';
 import { getConfiguration } from './NetworkConfiguration';
@@ -300,4 +301,24 @@ export async function deployNetworkComet(
   );
 
   return { comet, configurator, rewards };
+}
+
+export async function makeToken(
+  deploymentManager: DeploymentManager,
+  amount: number,
+  name: string,
+  decimals: number,
+  symbol: string
+): Promise<FaucetToken> {
+  const mint = (BigInt(amount) * 10n ** BigInt(decimals)).toString();
+  return deploymentManager.deploy(symbol, 'test/FaucetToken.sol', [mint, name, decimals, symbol]);
+}
+
+export async function makePriceFeed(
+  deploymentManager: DeploymentManager,
+  alias: string,
+  initialPrice: number,
+  decimals: number
+): Promise<SimplePriceFeed> {
+  return deploymentManager.deploy(alias, 'test/SimplePriceFeed.sol', [initialPrice * 1e8, decimals]);
 }
