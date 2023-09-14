@@ -32,6 +32,7 @@ import baseWethRelationConfigMap from './deployments/base/weth/relations';
 import baseGoerliRelationConfigMap from './deployments/base-goerli/usdc/relations';
 import baseGoerliWethRelationConfigMap from './deployments/base-goerli/weth/relations';
 import lineaGoerliRelationConfigMap from './deployments/linea-goerli/usdc/relations';
+import localhostCjpyRelationConfigMap from './deployments/localhost/cjpy/relations';
 
 
 task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
@@ -139,6 +140,11 @@ const networkConfigs: NetworkConfig[] = [
     network: 'linea-goerli',
     chainId: 59140,
     url: `https://linea-goerli.infura.io/v3/${INFURA_KEY}`,
+  },
+  {
+    network: 'localhost',
+    chainId: 1337,
+    url: `http://127.0.0.1:8545/`,
   },
 ];
 
@@ -317,6 +323,9 @@ const config: HardhatUserConfig = {
       },
       'linea-goerli': {
         usdc: lineaGoerliRelationConfigMap
+      },
+      'localhost': {
+        cjpy: localhostCjpyRelationConfigMap
       }
     },
   },

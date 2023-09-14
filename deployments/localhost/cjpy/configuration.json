@@ -1,6 +1,8 @@
 {
   "name": "Compound CJPY",
   "symbol": "cCJPYv3",
+  "governor": "0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0",
+  "pauseGuardian": "0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0",
   "baseToken": "CJPY",
   "borrowMin": "1000e18",
   "storeFrontPriceFactor": 0.5,

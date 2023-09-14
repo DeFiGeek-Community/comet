@@ -1,5 +1,5 @@
 import { Deployed, DeploymentManager } from '../../../plugins/deployment_manager';
-import { DeploySpec, deployComet, exp, wait, makeToken, makePriceFeed } from '../../../src/deploy';
+import { DeploySpec, exp, wait, makeToken, makePriceFeed, deployCometSimple } from '../../../src/deploy';
 
 // TODO: Support configurable assets as well?
 export default async function deploy(deploymentManager: DeploymentManager, deploySpec: DeploySpec): Promise<Deployed> {
@@ -8,11 +8,11 @@ export default async function deploy(deploymentManager: DeploymentManager, deplo
   const signer = await deploymentManager.getSigner();
   const fauceteer = await deploymentManager.deploy('fauceteer', 'test/Fauceteer.sol', []);
 
-  const DAI = await makeToken(deploymentManager, 10000000, 'DAI', 18, 'DAI');
+  const CJPY = await makeToken(deploymentManager, 10000000, 'CJPY', 18, 'CJPY');
   const GOLD = await makeToken(deploymentManager, 20000000, 'GOLD', 8, 'GOLD');
   const SILVER = await makeToken(deploymentManager, 30000000, 'SILVER', 10, 'SILVER');
 
-  const daiPriceFeed = await makePriceFeed(deploymentManager, 'DAI:priceFeed', 1, 8);
+  const cjpyPriceFeed = await makePriceFeed(deploymentManager, 'CJPY:priceFeed', 1, 8);
   const goldPriceFeed = await makePriceFeed(deploymentManager, 'GOLD:priceFeed', 0.5, 8);
   const silverPriceFeed = await makePriceFeed(deploymentManager, 'SILVER:priceFeed', 0.05, 8);
 
@@ -37,8 +37,8 @@ export default async function deploy(deploymentManager: DeploymentManager, deplo
   };
 
   // Deploy all Comet-related contracts
-  const deployed = await deployComet(deploymentManager, deploySpec, {
-    baseTokenPriceFeed: daiPriceFeed.address,
+  const deployed = await deployCometSimple(deploymentManager, deploySpec, {
+    baseTokenPriceFeed: cjpyPriceFeed.address,
     assetConfigs: [assetConfig0, assetConfig1],
   });
   const { rewards } = deployed;
@@ -57,7 +57,7 @@ export default async function deploy(deploymentManager: DeploymentManager, deplo
   trace(`Attempting to mint as ${signer.address}...`);
 
   await Promise.all(
-    [[DAI, 1e8], [GOLD, 2e6], [SILVER, 1e7]].map(([asset, units]) => {
+    [[CJPY, 1e8], [GOLD, 2e6], [SILVER, 1e7]].map(([asset, units]) => {
       return deploymentManager.idempotent(
         async () => (await asset.balanceOf(fauceteer.address)).eq(0),
         async () => {
