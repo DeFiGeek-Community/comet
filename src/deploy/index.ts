@@ -33,6 +33,33 @@ export interface ProtocolConfiguration {
   rewardTokenAddress?: string;
 }
 
+export interface KonpuConfiguration {
+  name?: string;
+  symbol?: string;
+  governor?: string;
+  pauseGuardian?: string;
+  baseToken?: string;
+  baseTokenPriceFeed?: string;
+  extensionDelegate?: string;
+  supplyKink?: BigNumberish;
+  supplyPerYearInterestRateBase?: BigNumberish;
+  supplyPerYearInterestRateSlopeLow?: BigNumberish;
+  supplyPerYearInterestRateSlopeHigh?: BigNumberish;
+  borrowKink?: BigNumberish;
+  borrowPerYearInterestRateBase?: BigNumberish;
+  borrowPerYearInterestRateSlopeLow?: BigNumberish;
+  borrowPerYearInterestRateSlopeHigh?: BigNumberish;
+  storeFrontPriceFactor?: BigNumberish;
+  trackingIndexScale?: BigNumberish;
+  rewardKink?: BigNumberish;
+  baseTrackingRewardSpeed?: BigNumberish;
+  baseMinForRewards?: BigNumberish;
+  baseBorrowMin?: BigNumberish;
+  targetReserves?: BigNumberish;
+  assetConfigs?: AssetConfigStruct[];
+  rewardTokenAddress?: string;
+}
+
 // If `all` is specified, it takes precedence.
 // Other options are independent of one another.
 export interface DeploySpec {

@@ -19,8 +19,8 @@
   },
   "tracking": {
     "indexScale": "1e15",
-    "baseSupplySpeed": "0.000011574074074074073e15",
-    "baseBorrowSpeed": "0.0011458333333333333e15",
+    "rewardKink": "85e16",
+    "baseTrackingRewardSpeed": "43125e9",
     "baseMinForRewards": "1000000e18"
   },
   "rewardToken": "REWARD",

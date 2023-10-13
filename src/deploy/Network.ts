@@ -1,7 +1,7 @@
 import { FaucetToken, SimplePriceFeed } from '../../build/types';
 import { Deployed, DeploymentManager } from '../../plugins/deployment_manager';
-import { DeploySpec, ProtocolConfiguration, wait, COMP_WHALES } from './index';
-import { getConfiguration } from './NetworkConfiguration';
+import { DeploySpec, ProtocolConfiguration, wait, COMP_WHALES, KonpuConfiguration } from './index';
+import { getConfiguration, getKonpuConfiguration } from './NetworkConfiguration';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 export function sameAddress(a: string, b: string) {
@@ -306,7 +306,7 @@ export async function deployNetworkComet(
 export async function deployNetworkCometSimple(
   deploymentManager: DeploymentManager,
   deploySpec: DeploySpec = { all: true },
-  configOverrides: ProtocolConfiguration = {},
+  configOverrides: KonpuConfiguration = {},
   adminSigner?: SignerWithAddress,
 ): Promise<Deployed> {
   function maybeForce(flag?: boolean): boolean {
@@ -333,14 +333,14 @@ export async function deployNetworkCometSimple(
     borrowPerYearInterestRateBase,
     storeFrontPriceFactor,
     trackingIndexScale,
-    baseTrackingSupplySpeed,
-    baseTrackingBorrowSpeed,
+    rewardKink,
+    baseTrackingRewardSpeed,
     baseMinForRewards,
     baseBorrowMin,
     targetReserves,
     assetConfigs,
     rewardTokenAddress
-  } = await getConfiguration(deploymentManager, configOverrides);
+  } = await getKonpuConfiguration(deploymentManager, configOverrides);
 
   /* Deploy contracts */
   const extConfiguration = {
@@ -376,8 +376,8 @@ export async function deployNetworkCometSimple(
     borrowPerYearInterestRateBase,
     storeFrontPriceFactor,
     trackingIndexScale,
-    baseTrackingSupplySpeed,
-    baseTrackingBorrowSpeed,
+    rewardKink,
+    baseTrackingRewardSpeed,
     baseMinForRewards,
     baseBorrowMin,
     targetReserves,
@@ -386,7 +386,7 @@ export async function deployNetworkCometSimple(
 
   const tmpCometImpl = await deploymentManager.deploy(
     'comet:implementation',
-    'Comet.sol',
+    'Konpu.sol',
     [configuration],
     maybeForce(),
   );
