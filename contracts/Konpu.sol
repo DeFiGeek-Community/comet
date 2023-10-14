@@ -596,11 +596,13 @@ contract Konpu is KonpuMainInterface {
         uint utilization
     ) public view returns (uint) {
         if (utilization <= rewardKink) {
-            return baseTrackingRewardSpeed;
-        } else {
+            return 0;
+        } else if (utilization <= FACTOR_SCALE) {
             return
-                baseTrackingRewardSpeed *
-                (FACTOR_SCALE - utilization / (FACTOR_SCALE - rewardKink));
+                (baseTrackingRewardSpeed * (utilization - rewardKink)) /
+                (FACTOR_SCALE - rewardKink);
+        } else {
+            return baseTrackingRewardSpeed;
         }
     }
 
@@ -608,11 +610,13 @@ contract Konpu is KonpuMainInterface {
         uint utilization
     ) public view returns (uint) {
         if (utilization <= rewardKink) {
-            return 0;
-        } else {
+            return baseTrackingRewardSpeed;
+        } else if (utilization <= FACTOR_SCALE) {
             return
-                (baseTrackingRewardSpeed * (utilization - rewardKink)) /
-                (FACTOR_SCALE - rewardKink);
+                baseTrackingRewardSpeed *
+                (FACTOR_SCALE - utilization / (FACTOR_SCALE - rewardKink));
+        } else {
+            return 0;
         }
     }
 
