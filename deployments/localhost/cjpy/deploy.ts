@@ -8,7 +8,7 @@ export default async function deploy(deploymentManager: DeploymentManager, deplo
   const signer = await deploymentManager.getSigner();
   const fauceteer = await deploymentManager.deploy('fauceteer', 'test/Fauceteer.sol', []);
 
-  const CJPY = await makeToken(deploymentManager, 10000000, 'CJPY', 18, 'CJPY');
+  const CJPY = await makeToken(deploymentManager, 100000000, 'CJPY', 18, 'CJPY');
   const TXJP = await makeToken(deploymentManager, 10000000, 'TXJP', 8, 'TXJP');
   const wstETH = await makeToken(deploymentManager, 10000000, 'wstETH', 18, 'wstETH');
   const REWARD = await makeToken(deploymentManager, 10000000, 'REWARD', 18, 'REWARD');
@@ -59,7 +59,7 @@ export default async function deploy(deploymentManager: DeploymentManager, deplo
   trace(`Attempting to mint as ${signer.address}...`);
 
   await Promise.all(
-    [[CJPY, 10000000], [TXJP, 10000000], [wstETH, 10000000]].map(([asset, units]) => {
+    [[CJPY, 100000000], [TXJP, 10000000], [wstETH, 10000000]].map(([asset, units]) => {
       return deploymentManager.idempotent(
         async () => (await asset.balanceOf(fauceteer.address)).eq(0),
         async () => {

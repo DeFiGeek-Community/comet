@@ -613,8 +613,8 @@ contract Konpu is KonpuMainInterface {
             return baseTrackingRewardSpeed;
         } else if (utilization <= FACTOR_SCALE) {
             return
-                baseTrackingRewardSpeed *
-                (FACTOR_SCALE - utilization / (FACTOR_SCALE - rewardKink));
+                (baseTrackingRewardSpeed * (FACTOR_SCALE - utilization)) /
+                (FACTOR_SCALE - rewardKink);
         } else {
             return 0;
         }
