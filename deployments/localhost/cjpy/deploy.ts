@@ -3,8 +3,8 @@ import { DeploySpec, exp, wait, makeToken, makePriceFeed, deployCometSimple, get
 
 // TODO: Support configurable assets as well?
 export default async function deploy(deploymentManager: DeploymentManager, deploySpec: DeploySpec): Promise<Deployed> {
+  await deploymentManager.hre.network.provider.send("hardhat_reset");
   const trace = deploymentManager.tracer();
-  const ethers = deploymentManager.hre.ethers;
   const signer = await deploymentManager.getSigner();
   const fauceteer = await deploymentManager.deploy('fauceteer', 'test/Fauceteer.sol', []);
 
