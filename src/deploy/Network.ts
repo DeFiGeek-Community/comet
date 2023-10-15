@@ -353,12 +353,6 @@ export async function deployNetworkCometSimple(
     [extConfiguration],
     maybeForce(deploySpec.cometExt)
   );
-  const cometFactory = await deploymentManager.deploy(
-    'cometFactory',
-    'CometFactory.sol',
-    [],
-    maybeForce(deploySpec.cometMain)
-  );
 
   const configuration = {
     governor,

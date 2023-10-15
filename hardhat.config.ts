@@ -422,7 +422,12 @@ const config: HardhatUserConfig = {
         network: 'linea-goerli',
         deployment: 'usdc',
         auxiliaryBase: 'goerli'
-      }
+      },
+      {
+        name: 'goerli-cjpy',
+        network: 'goerli',
+        deployment: 'cjpy',
+      },
     ],
   },
 
