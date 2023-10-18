@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity 0.8.15;
 
-import "./KonpuMainInterface.sol";
+import "./KompuMainInterface.sol";
 import "./ERC20.sol";
 import "./IPriceFeed.sol";
 
@@ -10,7 +10,7 @@ import "./IPriceFeed.sol";
  * @notice An efficient monolithic money market protocol
  * @author Compound
  */
-contract Konpu is KonpuMainInterface {
+contract Kompu is KompuMainInterface {
     /** General configuration constants **/
 
     /// @notice The admin of the protocol
@@ -589,6 +589,32 @@ contract Konpu is KonpuMainInterface {
             return 0;
         } else {
             return (totalBorrow_ * FACTOR_SCALE) / totalSupply_;
+        }
+    }
+
+    function baseTrackingSupplySpeed() public view override returns (uint) {
+        uint utilization = getUtilization();
+        if (utilization <= rewardKink) {
+            return 0;
+        } else if (utilization <= FACTOR_SCALE) {
+            return
+                (baseTrackingRewardSpeed * (utilization - rewardKink)) /
+                (FACTOR_SCALE - rewardKink);
+        } else {
+            return baseTrackingRewardSpeed;
+        }
+    }
+
+    function baseTrackingBorrowSpeed() public view override returns (uint) {
+        uint utilization = getUtilization();
+        if (utilization <= rewardKink) {
+            return baseTrackingRewardSpeed;
+        } else if (utilization <= FACTOR_SCALE) {
+            return
+                (baseTrackingRewardSpeed * (FACTOR_SCALE - utilization)) /
+                (FACTOR_SCALE - rewardKink);
+        } else {
+            return 0;
         }
     }
 

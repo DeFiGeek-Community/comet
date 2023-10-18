@@ -1,14 +1,14 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity 0.8.15;
 
-import "./KonpuCore.sol";
+import "./KompuCore.sol";
 
 /**
  * @title Compound's Comet Main Interface (without Ext)
  * @notice An efficient monolithic money market protocol
  * @author Compound
  */
-abstract contract KonpuMainInterface is KonpuCore {
+abstract contract KompuMainInterface is KompuCore {
     error Absurd();
     error AlreadyInitialized();
     error BadAsset();
@@ -297,6 +297,12 @@ abstract contract KonpuMainInterface is KonpuCore {
     function rewardKink() external view virtual returns (uint);
 
     function baseTrackingRewardSpeed() external view virtual returns (uint);
+
+    /// @dev uint104
+    function baseTrackingSupplySpeed() external view virtual returns (uint);
+
+    /// @dev uint64
+    function baseTrackingBorrowSpeed() external view virtual returns (uint);
 
     /// @dev uint104
     function baseMinForRewards() external view virtual returns (uint);

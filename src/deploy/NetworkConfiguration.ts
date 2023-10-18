@@ -1,6 +1,6 @@
 import { AssetConfigStruct } from '../../build/types/Comet';
 import { ConfigurationStruct } from '../../build/types/Configurator';
-import { KonpuConfiguration, ProtocolConfiguration } from './index';
+import { KompuConfiguration, ProtocolConfiguration } from './index';
 import { ContractMap } from '../../plugins/deployment_manager/ContractMap';
 import { DeploymentManager } from '../../plugins/deployment_manager/DeploymentManager';
 
@@ -72,7 +72,7 @@ interface NetworkTrackingConfiguration {
   baseMinForRewards: ScientificNotation;
 }
 
-interface NetworkKonpuTrackingConfiguration {
+interface NetworkKompuTrackingConfiguration {
   indexScale: ScientificNotation;
   rewardKink: ScientificNotation;
   baseTrackingRewardSpeed: ScientificNotation;
@@ -107,7 +107,7 @@ export interface NetworkConfiguration {
   rewardTokenAddress?: string;
 }
 
-export interface NetworkKonpuConfiguration {
+export interface NetworkKompuConfiguration {
   name: string;
   symbol: string;
   governor?: string;
@@ -119,7 +119,7 @@ export interface NetworkKonpuConfiguration {
   storeFrontPriceFactor: number;
   targetReserves: ScientificNotation;
   rates: NetworkRateConfiguration;
-  tracking: NetworkKonpuTrackingConfiguration;
+  tracking: NetworkKompuTrackingConfiguration;
   assets: { [name: string]: NetworkAssetConfiguration };
   rewardToken?: string;
   rewardTokenAddress?: string;
@@ -196,11 +196,11 @@ function getOverridesOrConfig(
   }, {});
 }
 
-function getKonpuOverridesOrConfig(
-  overrides: KonpuConfiguration,
-  config: NetworkKonpuConfiguration,
+function getKompuOverridesOrConfig(
+  overrides: KompuConfiguration,
+  config: NetworkKompuConfiguration,
   contracts: ContractMap,
-): KonpuConfiguration {
+): KompuConfiguration {
   const interestRateInfoMapping = (rates: NetworkRateConfiguration) => ({
     supplyKink: _ => percentage(rates.supplyKink),
     supplyPerYearInterestRateSlopeLow: _ => percentage(rates.supplySlopeLow),
@@ -211,7 +211,7 @@ function getKonpuOverridesOrConfig(
     borrowPerYearInterestRateSlopeHigh: _ => percentage(rates.borrowSlopeHigh),
     borrowPerYearInterestRateBase: _ => percentage(rates.borrowBase),
   });
-  const trackingInfoMapping = (tracking: NetworkKonpuTrackingConfiguration) => ({
+  const trackingInfoMapping = (tracking: NetworkKompuTrackingConfiguration) => ({
     trackingIndexScale: _ => stringToBigInt(tracking.indexScale),
     rewardKink: _ => stringToBigInt(tracking.rewardKink),
     baseTrackingRewardSpeed: _ => stringToBigInt(tracking.baseTrackingRewardSpeed),
@@ -248,13 +248,13 @@ export async function getConfiguration(
   return getOverridesOrConfig(configOverrides, config, contracts);
 }
 
-export async function getKonpuConfiguration(
+export async function getKompuConfiguration(
   deploymentManager: DeploymentManager,
-  configOverrides: KonpuConfiguration = {},
-): Promise<KonpuConfiguration> {
-  const config = await deploymentManager.readConfig<NetworkKonpuConfiguration>();
+  configOverrides: KompuConfiguration = {},
+): Promise<KompuConfiguration> {
+  const config = await deploymentManager.readConfig<NetworkKompuConfiguration>();
   const contracts = await deploymentManager.contracts();
-  return getKonpuOverridesOrConfig(configOverrides, config, contracts);
+  return getKompuOverridesOrConfig(configOverrides, config, contracts);
 }
 
 export async function getConfigurationStruct(

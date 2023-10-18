@@ -33,7 +33,7 @@ export interface ProtocolConfiguration {
   rewardTokenAddress?: string;
 }
 
-export interface KonpuConfiguration {
+export interface KompuConfiguration {
   name?: string;
   symbol?: string;
   governor?: string;

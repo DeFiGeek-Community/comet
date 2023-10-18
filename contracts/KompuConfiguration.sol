@@ -5,7 +5,7 @@ pragma solidity 0.8.15;
  * @title Compound's Comet Configuration Interface
  * @author Compound
  */
-contract KonpuConfiguration {
+contract KompuConfiguration {
     struct ExtConfiguration {
         bytes32 name32;
         bytes32 symbol32;

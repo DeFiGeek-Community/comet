@@ -1,7 +1,7 @@
 import { FaucetToken, SimplePriceFeed } from '../../build/types';
 import { Deployed, DeploymentManager } from '../../plugins/deployment_manager';
-import { DeploySpec, ProtocolConfiguration, wait, COMP_WHALES, KonpuConfiguration } from './index';
-import { getConfiguration, getKonpuConfiguration } from './NetworkConfiguration';
+import { DeploySpec, ProtocolConfiguration, wait, COMP_WHALES, KompuConfiguration } from './index';
+import { getConfiguration, getKompuConfiguration } from './NetworkConfiguration';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 export function sameAddress(a: string, b: string) {
@@ -306,7 +306,7 @@ export async function deployNetworkComet(
 export async function deployNetworkCometSimple(
   deploymentManager: DeploymentManager,
   deploySpec: DeploySpec = { all: true },
-  configOverrides: KonpuConfiguration = {},
+  configOverrides: KompuConfiguration = {},
   adminSigner?: SignerWithAddress,
 ): Promise<Deployed> {
   function maybeForce(flag?: boolean): boolean {
@@ -340,7 +340,7 @@ export async function deployNetworkCometSimple(
     targetReserves,
     assetConfigs,
     rewardTokenAddress
-  } = await getKonpuConfiguration(deploymentManager, configOverrides);
+  } = await getKompuConfiguration(deploymentManager, configOverrides);
 
   /* Deploy contracts */
   const extConfiguration = {
@@ -380,7 +380,7 @@ export async function deployNetworkCometSimple(
 
   const tmpCometImpl = await deploymentManager.deploy(
     'comet:implementation',
-    'Konpu.sol',
+    'Kompu.sol',
     [configuration],
     maybeForce(),
   );

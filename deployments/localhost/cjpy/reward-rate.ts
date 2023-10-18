@@ -63,7 +63,7 @@ async function main() {
     const [owner, skip, c1,c2,c3] = await ethers.getSigners();
 
     const comet = await ethers.getContractAt(
-        "Konpu",
+        "Kompu",
         aliases.comet
     );
     const cometExt = await ethers.getContractAt(
