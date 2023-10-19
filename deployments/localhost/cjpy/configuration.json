@@ -20,7 +20,7 @@
   "tracking": {
     "indexScale": "1e15",
     "rewardKink": "85e16",
-    "baseTrackingRewardSpeed": "43125e9",
+    "baseTrackingRewardSpeed": "60375e6",
     "baseMinForRewards": "1000000e18"
   },
   "rewardToken": "REWARD",
