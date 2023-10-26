@@ -1,0 +1,67 @@
+{
+  "name": "PND CJPY",
+  "symbol": "pCJPY",
+  "governor": "0x0b0A167a0b6800207c89544D2eBdC98DCdD33bec",
+  "pauseGuardian": "0x0b0A167a0b6800207c89544D2eBdC98DCdD33bec",
+  "baseToken": "CJPY",
+  "baseTokenAddress": "0x1cfa5641c01406aB8AC350dEd7d735ec41298372",
+  "baseTokenPriceFeed": "0xbce206cae7f0ec07b545edde332a47c2f75bbeb3",
+  "borrowMin": "1000e18",
+  "storeFrontPriceFactor": 0.5,
+  "targetReserves": "5_000_000e18",
+  "rewardTokenAddress": "0x5fff1443cb859e17e9a6786f7e24c369f22fd002",
+  "rates": {
+    "supplyKink": 0.9,
+    "supplySlopeLow": 0.04,
+    "supplySlopeHigh": 0.99,
+    "supplyBase": 0,
+    "borrowKink": 0.9,
+    "borrowSlopeLow": 0.025,
+    "borrowSlopeHigh": 0.99,
+    "borrowBase": 0.0275
+  },
+  "tracking": {
+    "indexScale": "1e15",
+    "rewardKink": "85e16",
+    "baseTrackingRewardSpeed": "60375e6",
+    "baseMinForRewards": "10_000_000e18"
+  },
+  "assets": {
+    "TXJP": {
+      "address": "0x961dD84059505D59f82cE4fb87D3c09bec65301d",
+      "decimals": "8",
+      "priceFeed": "",
+      "borrowCF": 0.8,
+      "liquidateCF": 0.9,
+      "liquidationFactor": 0.9,
+      "supplyCap": "100_000e8"
+    },
+    "wstETH": {
+      "address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+      "decimals": "18",
+      "priceFeed": "",
+      "borrowCF": 0.85,
+      "liquidateCF": 0.95,
+      "liquidationFactor": 0.95,
+      "supplyCap": "50_000e18"
+    },
+    "USDC": {
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "decimals": "6",
+      "priceFeed": "0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
+      "borrowCF": 0.95,
+      "liquidateCF": 0.98,
+      "liquidationFactor": 0.95,
+      "supplyCap": "100_000_000e6"
+    },
+    "crvUSD": {
+      "address": "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+      "decimals": "18",
+      "priceFeed": "0xeef0c605546958c1f899b6fb336c20671f9cd49f",
+      "borrowCF": 0.95,
+      "liquidateCF": 0.98,
+      "liquidationFactor": 0.95,
+      "supplyCap": "100_000_000e18"
+    }
+  }
+}
