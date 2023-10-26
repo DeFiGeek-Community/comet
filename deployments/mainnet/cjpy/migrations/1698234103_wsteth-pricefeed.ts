@@ -18,7 +18,7 @@ export default migration('1698234103_wsteth-pricefeed', {
     ];
     const wstETHPriceFeed = await deploymentManager.deploy(
       'wstETH:priceFeed',
-      'MultiplicativePriceFeed.sol',
+      'pricefeeds/MultiplicativePriceFeed.sol',
       configuration
     );
 
@@ -28,5 +28,9 @@ export default migration('1698234103_wsteth-pricefeed', {
       constructorArguments: [configuration],
     };
     await deploymentManager.verifyContract(args);
-  }
+  },
+
+  async enacted(deploymentManager: DeploymentManager): Promise<boolean> {
+    return true;
+  },
 });

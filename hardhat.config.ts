@@ -346,6 +346,11 @@ const config: HardhatUserConfig = {
         deployment: 'weth',
       },
       {
+        name: 'mainnet-cjpy',
+        network: 'mainnet',
+        deployment: 'cjpy',
+      },
+      {
         name: 'development',
         network: 'hardhat',
         deployment: 'dai'

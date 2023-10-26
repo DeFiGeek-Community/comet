@@ -19,7 +19,7 @@ export default migration('1698234124_cjpy-pricefeed', {
     ];
     const TxjpPriceFeed = await deploymentManager.deploy(
       'TXJP:priceFeed',
-      'UniChainlinkPriceFeed.sol',
+      'pricefeeds/UniChainlinkPriceFeed.sol',
       configuration
     );
 
@@ -29,5 +29,9 @@ export default migration('1698234124_cjpy-pricefeed', {
       constructorArguments: [configuration],
     };
     await deploymentManager.verifyContract(args);
-  }
+  },
+
+  async enacted(deploymentManager: DeploymentManager): Promise<boolean> {
+    return true;
+  },
 });
