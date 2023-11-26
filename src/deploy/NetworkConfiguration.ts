@@ -203,12 +203,12 @@ function getKompuOverridesOrConfig(
 ): KompuConfiguration {
   const interestRateInfoMapping = (rates: NetworkRateConfiguration) => ({
     supplyKink: _ => percentage(rates.supplyKink),
-    supplyPerYearInterestRateSlopeLow: _ => percentage(rates.supplySlopeLow),
-    supplyPerYearInterestRateSlopeHigh: _ => percentage(rates.supplySlopeHigh),
+    supplyPerYearInterestRateSlopeLow: _ => percentage(rates.supplySlopeLow, false),
+    supplyPerYearInterestRateSlopeHigh: _ => percentage(rates.supplySlopeHigh, false),
     supplyPerYearInterestRateBase: _ => percentage(rates.supplyBase),
     borrowKink: _ => percentage(rates.borrowKink),
-    borrowPerYearInterestRateSlopeLow: _ => percentage(rates.borrowSlopeLow),
-    borrowPerYearInterestRateSlopeHigh: _ => percentage(rates.borrowSlopeHigh),
+    borrowPerYearInterestRateSlopeLow: _ => percentage(rates.borrowSlopeLow, false),
+    borrowPerYearInterestRateSlopeHigh: _ => percentage(rates.borrowSlopeHigh, false),
     borrowPerYearInterestRateBase: _ => percentage(rates.borrowBase),
   });
   const trackingInfoMapping = (tracking: NetworkKompuTrackingConfiguration) => ({

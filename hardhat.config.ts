@@ -24,6 +24,7 @@ import mumbaiRelationConfigMap from './deployments/mumbai/usdc/relations';
 import mainnetRelationConfigMap from './deployments/mainnet/usdc/relations';
 import mainnetWethRelationConfigMap from './deployments/mainnet/weth/relations';
 import mainnetCjpyRelationConfigMap from './deployments/mainnet/cjpy/relations';
+import mainnetCrvUSDRelationConfigMap from './deployments/mainnet/crvusd/relations';
 import polygonRelationConfigMap from './deployments/polygon/usdc/relations';
 import arbitrumRelationConfigMap from './deployments/arbitrum/usdc/relations';
 import arbitrumBridgedUsdcGoerliRelationConfigMap from './deployments/arbitrum-goerli/usdc.e/relations';
@@ -303,7 +304,8 @@ const config: HardhatUserConfig = {
       mainnet: {
         usdc: mainnetRelationConfigMap,
         weth: mainnetWethRelationConfigMap,
-        cjpy: mainnetCjpyRelationConfigMap
+        cjpy: mainnetCjpyRelationConfigMap,
+        crvusd: mainnetCrvUSDRelationConfigMap
       },
       polygon: {
         usdc: polygonRelationConfigMap
