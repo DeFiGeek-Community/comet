@@ -25,6 +25,7 @@ import mainnetRelationConfigMap from './deployments/mainnet/usdc/relations';
 import mainnetWethRelationConfigMap from './deployments/mainnet/weth/relations';
 import mainnetCjpyRelationConfigMap from './deployments/mainnet/cjpy/relations';
 import mainnetCrvUSDRelationConfigMap from './deployments/mainnet/crvusd/relations';
+import mainnetDfgcUsdcRelationConfigMap from './deployments/mainnet/dfgcusdc/relations';
 import mainnetDfgcWethRelationConfigMap from './deployments/mainnet/dfgcweth/relations';
 import polygonRelationConfigMap from './deployments/polygon/usdc/relations';
 import arbitrumRelationConfigMap from './deployments/arbitrum/usdc/relations';
@@ -307,6 +308,7 @@ const config: HardhatUserConfig = {
         weth: mainnetWethRelationConfigMap,
         cjpy: mainnetCjpyRelationConfigMap,
         crvusd: mainnetCrvUSDRelationConfigMap,
+        dfgcusdc: mainnetDfgcUsdcRelationConfigMap,
         dfgcweth: mainnetDfgcWethRelationConfigMap
       },
       polygon: {
