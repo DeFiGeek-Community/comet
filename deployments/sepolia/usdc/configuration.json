@@ -1,0 +1,58 @@
+{
+  "name": "pnd USDC",
+  "symbol": "pUSDC",
+  "governor": "0x31F838CC1B8FE62995946a658A7e1A5D7301C3D2",
+  "pauseGuardian": "0x31F838CC1B8FE62995946a658A7e1A5D7301C3D2",
+  "baseToken": "USDC",
+  "baseTokenAddress": "0x09D52d76F4e9683186C00786574f8c20Ad3f18Ca",
+  "baseTokenPriceFeed": "0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E",
+  "borrowMin": "1e6",
+  "storeFrontPriceFactor": 0.5,
+  "targetReserves": "100_000_000e6",
+  "rewardTokenAddress": "0x5CdEfe1204cd7b64af74Ef8147a39fe912010A8B",
+  "rates": {
+    "supplyKink": 0.95,
+    "supplySlopeLow": 0.05,
+    "supplySlopeHigh": 1.8,
+    "supplyBase": 0,
+    "borrowKink": 0.95,
+    "borrowSlopeLow": 0.025,
+    "borrowSlopeHigh": 1.8,
+    "borrowBase": 0.035
+  },
+  "tracking": {
+    "indexScale": "1e15",
+    "rewardKink": "95e16",
+    "baseTrackingRewardSpeed": "55545e7",
+    "baseMinForRewards": "500_000e6"
+  },
+  "assets": {
+    "TXJP": {
+      "address": "0xdca6BcCecd7C25C654DFD80EcF7c63731B12Df5e",
+      "decimals": "8",
+      "priceFeed": "0xD10Ce89bec0e113eEE4497A79b0552C5E129291E",
+      "borrowCF": 0.8,
+      "liquidateCF": 0.9,
+      "liquidationFactor": 0.9,
+      "supplyCap": "100_000e8"
+    },
+    "wstETH": {
+      "address": "0x5CdEfe1204cd7b64af74Ef8147a39fe912010A8B",
+      "decimals": "18",
+      "priceFeed": "0x694AA1769357215DE4FAC081bf1f309aDC325306",
+      "borrowCF": 0.85,
+      "liquidateCF": 0.95,
+      "liquidationFactor": 0.95,
+      "supplyCap": "50_000e18"
+    },
+    "crvUSD": {
+      "address": "0x7BF9f68A3179b17279F2BC4BCFe323DA27fdeEb8",
+      "decimals": "18",
+      "priceFeed": "0xA2F78ab2355fe2f984D808B5CeE7FD0A93D5270E",
+      "borrowCF": 0.95,
+      "liquidateCF": 0.98,
+      "liquidationFactor": 0.95,
+      "supplyCap": "100_000_000e18"
+    }
+  }
+}
