@@ -1,15 +1,18 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity 0.8.15;
 
+import "@uniswap/v3-periphery/contracts/libraries/OracleLibrary.sol";
+
 import "../vendor/@chainlink/contracts/src/v0.8/interfaces/AggregatorV3Interface.sol";
+import "../ERC20.sol";
 import "../IPriceFeed.sol";
 import "../IUniswapV3TwapPriceOracle.sol";
 
 /**
- * @title UniChainlink price feed
+ * @title UniTwapChainlinkPriceFeed price feed
  * @notice A custom price feed that calculates the price for Uniswapv3 Twap and Chainlink
  */
-contract UniChainlinkPriceFeed is IPriceFeed {
+contract UniTwapChainlinkPriceFeed is IPriceFeed {
     /** Custom errors **/
     error BadDecimals();
     error InvalidInt256();
@@ -23,14 +26,20 @@ contract UniChainlinkPriceFeed is IPriceFeed {
     /// @notice Number of decimals for returned prices
     uint8 public immutable override decimals;
 
-    /// @notice Uniswap price feed
-    address public immutable priceFeedUniswap;
+    /// @notice Uniswap pool
+    address public immutable uniswapPool;
 
-    /// @notice Uniswap underlying
+    /// @notice Uniswap pool underlying token
     address public immutable uniswapUnderlying;
+
+    /// @notice Uniswap pool base token
+    address public immutable uniswapBase;
 
     /// @notice Chainlink price feed
     address public immutable priceFeedChainlink;
+
+    /// @notice The base unit amount of the `uniswapUnderlying` token, scaled by its decimals.
+    uint128 public immutable baseUnit;
 
     /// @notice Combined scale of the two underlying Chainlink price feeds
     int public immutable combinedScale;
@@ -39,23 +48,35 @@ contract UniChainlinkPriceFeed is IPriceFeed {
     int public immutable priceFeedScale;
 
     /**
+     * @dev Ideal TWAP interval.
+     */
+    uint32 public constant TWAP_PERIOD = 10 minutes;
+
+    /**
      * @notice Construct a new multiplicative price feed
-     * @param priceFeedUniswap_ The address of the first price feed to fetch prices from Uniswap
+     * @param uniswapPool_ The address of the Uniswap V3 pool used for price calculation.
+     * @param uniswapUnderlying_ The address of the token in the Uniswap pair being priced.
+     * @param uniswapBase_ The address of the base token in the Uniswap pair.
      * @param priceFeedChainlink_ The address of the second price feed to fetch prices from Chainlink
      * @param decimals_ The number of decimals for the returned prices
      * @param description_ The description of the price feed
      **/
     constructor(
-        address priceFeedUniswap_,
+        address uniswapPool_,
         address uniswapUnderlying_,
+        address uniswapBase_,
         address priceFeedChainlink_,
         uint8 decimals_,
         string memory description_
     ) {
-        priceFeedUniswap = priceFeedUniswap_;
+        uniswapPool = uniswapPool_;
         uniswapUnderlying = uniswapUnderlying_;
+        uniswapBase = uniswapBase_;
         priceFeedChainlink = priceFeedChainlink_;
-        uint8 priceFeedUniswapDecimals = 18;
+        baseUnit = uint128(10 ** ERC20(uniswapUnderlying_).decimals());
+        uint8 priceFeedUniswapDecimals = 18 -
+            (ERC20(uniswapUnderlying_).decimals() -
+                ERC20(uniswapBase_).decimals());
         uint8 priceFeedChainlinkDecimals = AggregatorV3Interface(
             priceFeedChainlink_
         ).decimals();
@@ -67,6 +88,24 @@ contract UniChainlinkPriceFeed is IPriceFeed {
         decimals = decimals_;
         description = description_;
         priceFeedScale = int256(10 ** decimals);
+    }
+
+    /**
+     * @notice Fetches the TWAP of the `underlying` token using the specified Uniswap V3 pool.
+     */
+    function uniswapPrice() public view returns (uint) {
+        (int24 timeWeightedAverageTick, ) = OracleLibrary.consult(
+            uniswapPool,
+            TWAP_PERIOD
+        );
+
+        uint256 quote = OracleLibrary.getQuoteAtTick(
+            timeWeightedAverageTick,
+            baseUnit,
+            uniswapUnderlying,
+            uniswapBase
+        );
+        return quote;
     }
 
     /**
@@ -84,9 +123,7 @@ contract UniChainlinkPriceFeed is IPriceFeed {
         override
         returns (uint80, int256, uint256, uint256, uint80)
     {
-        int256 priceUniswap = signed256(
-            IUniswapV3TwapPriceOracle(priceFeedUniswap).price(uniswapUnderlying)
-        );
+        int256 priceUniswap = signed256(uniswapPrice());
         (
             uint80 roundId_,
             int256 priceChainlink,
