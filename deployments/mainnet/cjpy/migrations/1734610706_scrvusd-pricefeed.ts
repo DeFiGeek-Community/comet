@@ -28,5 +28,9 @@ export default migration('1734610706_scrvusd-pricefeed', {
       constructorArguments: [configuration],
     };
     await deploymentManager.verifyContract(args);
-  }
+  },
+
+  async enacted(deploymentManager: DeploymentManager): Promise<boolean> {
+    return true;
+  },
 });
