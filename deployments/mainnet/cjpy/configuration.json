@@ -89,6 +89,15 @@
       "liquidateCF": 0.7,
       "liquidationFactor": 0.8,
       "supplyCap": "100_000_000e18"
+    },
+    "scrvUSD": {
+      "address": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
+      "decimals": "18",
+      "priceFeed": "0x571323c0501b76fc1bA16b4551116248c77cCD18",
+      "borrowCF": 0.95,
+      "liquidateCF": 0.98,
+      "liquidationFactor": 0.985,
+      "supplyCap": "50_000_000e18"
     }
   }
 }
