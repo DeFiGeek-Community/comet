@@ -303,7 +303,7 @@ export async function deployNetworkComet(
   return { comet, configurator, rewards };
 }
 
-export async function deployNetworkCometSimple(
+export async function deployNetworkKompuSimple(
   deploymentManager: DeploymentManager,
   deploySpec: DeploySpec = { all: true },
   configOverrides: KompuConfiguration = {},
