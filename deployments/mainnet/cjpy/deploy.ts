@@ -1,5 +1,5 @@
 import { Deployed, DeploymentManager } from '../../../plugins/deployment_manager';
-import { DeploySpec, exp, wait, makeToken, deployCometSimple } from '../../../src/deploy';
+import { DeploySpec, exp, wait, makeToken, deployKompuSimple } from '../../../src/deploy';
 
 // TODO: Support configurable assets as well?
 export default async function deploy(deploymentManager: DeploymentManager, deploySpec: DeploySpec): Promise<Deployed> {
@@ -7,7 +7,7 @@ export default async function deploy(deploymentManager: DeploymentManager, deplo
   const signer = await deploymentManager.getSigner();
   
   // Deploy all Comet-related contracts
-  const deployed = await deployCometSimple(deploymentManager, deploySpec);
+  const deployed = await deployKompuSimple(deploymentManager, deploySpec);
 
   return { ...deployed };
 }

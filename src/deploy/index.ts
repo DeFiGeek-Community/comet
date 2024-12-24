@@ -1,7 +1,7 @@
 import { AssetConfigStruct } from '../../build/types/Comet';
 import { BigNumberish, Contract, PopulatedTransaction } from 'ethers';
 
-export { cloneGov, deployNetworkComet as deployComet, deployNetworkCometSimple as deployCometSimple, sameAddress, makeToken, makePriceFeed } from './Network';
+export { cloneGov, deployNetworkComet as deployComet, deployNetworkKompuSimple as deployKompuSimple, sameAddress, makeToken, makePriceFeed } from './Network';
 export { getConfiguration, getConfigurationStruct } from './NetworkConfiguration';
 export { exp, getBlock, wait } from '../../test/helpers';
 export { debug } from '../../plugins/deployment_manager/Utils';
@@ -67,6 +67,7 @@ export interface DeploySpec {
   cometMain?: boolean; // Re-deploy the main interface (config impl + comet factory + comet impl)
   cometExt?: boolean; // Re-deploy the ext interface (comet ext)
   rewards?: boolean; // Re-deploy the rewards contract
+  update?: boolean; // Apply incremental updates to existing deployments
 }
 
 export interface ContractAction {
