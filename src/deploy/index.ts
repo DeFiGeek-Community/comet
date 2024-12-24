@@ -67,6 +67,7 @@ export interface DeploySpec {
   cometMain?: boolean; // Re-deploy the main interface (config impl + comet factory + comet impl)
   cometExt?: boolean; // Re-deploy the ext interface (comet ext)
   rewards?: boolean; // Re-deploy the rewards contract
+  update?: boolean; // Apply incremental updates to existing deployments
 }
 
 export interface ContractAction {

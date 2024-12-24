@@ -382,7 +382,7 @@ export async function deployNetworkKompuSimple(
     'comet:implementation',
     'Kompu.sol',
     [configuration],
-    maybeForce(),
+    maybeForce(deploySpec.update),
   );
   const cometProxy = await deploymentManager.deploy(
     'comet',
