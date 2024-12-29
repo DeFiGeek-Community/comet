@@ -82,7 +82,7 @@
       "supplyCap": "10_000_000e18"
     },
     "PND": {
-      "address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+      "address": "0x5fff1443cb859e17e9a6786f7e24c369f22fd002",
       "decimals": "18",
       "priceFeed": "0x11ff569892Ca55846dACAa2B43C1877424ceB0CB",
       "borrowCF": 0.6,

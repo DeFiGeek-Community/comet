@@ -1,7 +1,7 @@
 import { VerifyArgs } from '../../../../plugins/deployment_manager';
 import { DeploymentManager } from '../../../../plugins/deployment_manager/DeploymentManager';
 import { migration } from '../../../../plugins/deployment_manager/Migration';
-import { DeploySpec, deployKompuSimple } from '../../../../src/deploy';
+import { DeploySpec, deployKompuSimple, getKompuConfiguration } from '../../../../src/deploy';
 
 interface Vars {};
 
@@ -15,25 +15,69 @@ export default migration('1734850237_param-update-1', {
       all: false,
       update: true,
     };
-    const deployed = await deployKompuSimple(deploymentManager, deploySpec);
+
+    const {tmpCometImpl, cometExt} = await deployKompuSimple(deploymentManager, deploySpec);
     
-    await deploymentManager.verifyContracts(async (address, args) => {
-      if (args.via === 'buildfile') {
-        const { contract: _, ...rest } = args;
-        console.log(`[${address}:`, rest);
-      } else {
-        console.log(`[${address}:`, args);
-      }
-      return true;
-    });
-    console.log(deployed);
+    const {
+      name,
+      symbol,
+      governor, // NB: generally 'timelock' alias, not 'governor'
+      pauseGuardian,
+      baseToken,
+      baseTokenPriceFeed,
+      supplyKink,
+      supplyPerYearInterestRateSlopeLow,
+      supplyPerYearInterestRateSlopeHigh,
+      supplyPerYearInterestRateBase,
+      borrowKink,
+      borrowPerYearInterestRateSlopeLow,
+      borrowPerYearInterestRateSlopeHigh,
+      borrowPerYearInterestRateBase,
+      storeFrontPriceFactor,
+      trackingIndexScale,
+      rewardKink,
+      baseTrackingRewardSpeed,
+      baseMinForRewards,
+      baseBorrowMin,
+      targetReserves,
+      assetConfigs,
+      rewardTokenAddress
+    } = await getKompuConfiguration(deploymentManager);
 
-    // const args: VerifyArgs = {
-    //   via: 'artifacts',
-    //   address: cometImpl.address,
-    //   constructorArguments: [config]
-    // };
+    const config = {
+      governor,
+      pauseGuardian,
+      baseToken,
+      baseTokenPriceFeed,
+      extensionDelegate: cometExt.address,
+      supplyKink,
+      supplyPerYearInterestRateSlopeLow,
+      supplyPerYearInterestRateSlopeHigh,
+      supplyPerYearInterestRateBase,
+      borrowKink,
+      borrowPerYearInterestRateSlopeLow,
+      borrowPerYearInterestRateSlopeHigh,
+      borrowPerYearInterestRateBase,
+      storeFrontPriceFactor,
+      trackingIndexScale,
+      rewardKink,
+      baseTrackingRewardSpeed,
+      baseMinForRewards,
+      baseBorrowMin,
+      targetReserves,
+      assetConfigs,
+    };
 
-    // await deploymentManager.verifyContract(args);
-  }
+    const args: VerifyArgs = {
+      via: 'artifacts',
+      address: tmpCometImpl.address,
+      constructorArguments: [config]
+    };
+
+    await deploymentManager.verifyContract(args);
+  },
+
+  async enacted(deploymentManager: DeploymentManager): Promise<boolean> {
+    return true;
+  },
 });

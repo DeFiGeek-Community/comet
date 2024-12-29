@@ -434,7 +434,7 @@ export async function deployNetworkKompuSimple(
     }
   );
 
-  return { comet, rewards };
+  return { comet, cometExt, tmpCometImpl, rewards };
 }
 
 export async function makeToken(
