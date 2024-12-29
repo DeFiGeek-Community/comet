@@ -2,7 +2,7 @@ import { AssetConfigStruct } from '../../build/types/Comet';
 import { BigNumberish, Contract, PopulatedTransaction } from 'ethers';
 
 export { cloneGov, deployNetworkComet as deployComet, deployNetworkKompuSimple as deployKompuSimple, sameAddress, makeToken, makePriceFeed } from './Network';
-export { getConfiguration, getConfigurationStruct } from './NetworkConfiguration';
+export { getConfiguration, getConfigurationStruct, getKompuConfiguration } from './NetworkConfiguration';
 export { exp, getBlock, wait } from '../../test/helpers';
 export { debug } from '../../plugins/deployment_manager/Utils';
 
