@@ -20,9 +20,14 @@ import './tasks/scenario/task.ts';
 import relationConfigMap from './deployments/relations';
 import goerliRelationConfigMap from './deployments/goerli/usdc/relations';
 import goerliWethRelationConfigMap from './deployments/goerli/weth/relations';
+import sepoliaUsdcRelationConfigMap from './deployments/sepolia/usdc/relations';
 import mumbaiRelationConfigMap from './deployments/mumbai/usdc/relations';
 import mainnetRelationConfigMap from './deployments/mainnet/usdc/relations';
 import mainnetWethRelationConfigMap from './deployments/mainnet/weth/relations';
+import mainnetCjpyRelationConfigMap from './deployments/mainnet/cjpy/relations';
+import mainnetCrvUSDRelationConfigMap from './deployments/mainnet/crvusd/relations';
+import mainnetDfgcUsdcRelationConfigMap from './deployments/mainnet/dfgcusdc/relations';
+import mainnetDfgcWethRelationConfigMap from './deployments/mainnet/dfgcweth/relations';
 import polygonRelationConfigMap from './deployments/polygon/usdc/relations';
 import arbitrumRelationConfigMap from './deployments/arbitrum/usdc/relations';
 import arbitrumBridgedUsdcGoerliRelationConfigMap from './deployments/arbitrum-goerli/usdc.e/relations';
@@ -32,6 +37,7 @@ import baseWethRelationConfigMap from './deployments/base/weth/relations';
 import baseGoerliRelationConfigMap from './deployments/base-goerli/usdc/relations';
 import baseGoerliWethRelationConfigMap from './deployments/base-goerli/weth/relations';
 import lineaGoerliRelationConfigMap from './deployments/linea-goerli/usdc/relations';
+import localhostCjpyRelationConfigMap from './deployments/localhost/cjpy/relations';
 
 
 task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
@@ -43,11 +49,11 @@ const {
   COINMARKETCAP_API_KEY,
   ETH_PK = '',
   ETHERSCAN_KEY,
-  SNOWTRACE_KEY,
-  POLYGONSCAN_KEY,
-  ARBISCAN_KEY,
-  BASESCAN_KEY,
-  LINEASCAN_KEY,
+  // SNOWTRACE_KEY,
+  // POLYGONSCAN_KEY,
+  // ARBISCAN_KEY,
+  // BASESCAN_KEY,
+  // LINEASCAN_KEY,
   INFURA_KEY,
   QUICKNODE_KEY,
   MNEMONIC = 'myth like bonus scare over problem client lizard pioneer submit female collect',
@@ -74,11 +80,11 @@ export function requireEnv(varName, msg?: string): string {
 // required environment variables
 [
   'ETHERSCAN_KEY',
-  'SNOWTRACE_KEY',
+  // 'SNOWTRACE_KEY',
   'INFURA_KEY',
-  'POLYGONSCAN_KEY',
-  'ARBISCAN_KEY',
-  'LINEASCAN_KEY'
+  // 'POLYGONSCAN_KEY',
+  // 'ARBISCAN_KEY',
+  // 'LINEASCAN_KEY'
 ].map(v => requireEnv(v));
 
 // Networks
@@ -95,6 +101,7 @@ const networkConfigs: NetworkConfig[] = [
   { network: 'ropsten', chainId: 3 },
   { network: 'rinkeby', chainId: 4 },
   { network: 'goerli', chainId: 5 },
+  { network: 'sepolia', chainId: 11155111 },
   {
     network: 'polygon',
     chainId: 137,
@@ -139,6 +146,11 @@ const networkConfigs: NetworkConfig[] = [
     network: 'linea-goerli',
     chainId: 59140,
     url: `https://linea-goerli.infura.io/v3/${INFURA_KEY}`,
+  },
+  {
+    network: 'localhost',
+    chainId: 1337,
+    url: `http://127.0.0.1:8545/`,
   },
 ];
 
@@ -213,22 +225,23 @@ const config: HardhatUserConfig = {
       ropsten: ETHERSCAN_KEY,
       rinkeby: ETHERSCAN_KEY,
       goerli: ETHERSCAN_KEY,
+      sepolia: ETHERSCAN_KEY,
       // Avalanche
-      avalanche: SNOWTRACE_KEY,
-      avalancheFujiTestnet: SNOWTRACE_KEY,
+      // avalanche: SNOWTRACE_KEY,
+      // avalancheFujiTestnet: SNOWTRACE_KEY,
       // Polygon
-      polygon: POLYGONSCAN_KEY,
-      polygonMumbai: POLYGONSCAN_KEY,
+      // polygon: POLYGONSCAN_KEY,
+      // polygonMumbai: POLYGONSCAN_KEY,
       // Arbitrum
-      arbitrumOne: ARBISCAN_KEY,
-      arbitrumTestnet: ARBISCAN_KEY,
-      arbitrum: ARBISCAN_KEY,
-      'arbitrum-goerli': ARBISCAN_KEY,
+      // arbitrumOne: ARBISCAN_KEY,
+      // arbitrumTestnet: ARBISCAN_KEY,
+      // arbitrum: ARBISCAN_KEY,
+      // 'arbitrum-goerli': ARBISCAN_KEY,
       // Base
-      base: BASESCAN_KEY,
-      'base-goerli': BASESCAN_KEY,
+      // base: BASESCAN_KEY,
+      // 'base-goerli': BASESCAN_KEY,
       // Linea
-      'linea-goerli': LINEASCAN_KEY,
+      // 'linea-goerli': LINEASCAN_KEY,
     },
     customChains: [
       {
@@ -290,12 +303,19 @@ const config: HardhatUserConfig = {
         usdc: goerliRelationConfigMap,
         weth: goerliWethRelationConfigMap
       },
+      sepolia: {
+        usdc: sepoliaUsdcRelationConfigMap,
+      },
       mumbai: {
         usdc: mumbaiRelationConfigMap
       },
       mainnet: {
         usdc: mainnetRelationConfigMap,
-        weth: mainnetWethRelationConfigMap
+        weth: mainnetWethRelationConfigMap,
+        cjpy: mainnetCjpyRelationConfigMap,
+        crvusd: mainnetCrvUSDRelationConfigMap,
+        dfgcusdc: mainnetDfgcUsdcRelationConfigMap,
+        dfgcweth: mainnetDfgcWethRelationConfigMap
       },
       polygon: {
         usdc: polygonRelationConfigMap
@@ -317,6 +337,9 @@ const config: HardhatUserConfig = {
       },
       'linea-goerli': {
         usdc: lineaGoerliRelationConfigMap
+      },
+      'localhost': {
+        cjpy: localhostCjpyRelationConfigMap
       }
     },
   },
@@ -333,6 +356,11 @@ const config: HardhatUserConfig = {
         name: 'mainnet-weth',
         network: 'mainnet',
         deployment: 'weth',
+      },
+      {
+        name: 'mainnet-cjpy',
+        network: 'mainnet',
+        deployment: 'cjpy',
       },
       {
         name: 'development',
@@ -413,7 +441,17 @@ const config: HardhatUserConfig = {
         network: 'linea-goerli',
         deployment: 'usdc',
         auxiliaryBase: 'goerli'
-      }
+      },
+      {
+        name: 'goerli-cjpy',
+        network: 'goerli',
+        deployment: 'cjpy',
+      },
+      {
+        name: 'sepolia-usdc',
+        network: 'sepolia',
+        deployment: 'usdc',
+      },
     ],
   },
 

@@ -1,6 +1,7 @@
+import { FaucetToken, SimplePriceFeed } from '../../build/types';
 import { Deployed, DeploymentManager } from '../../plugins/deployment_manager';
-import { DeploySpec, ProtocolConfiguration, wait, COMP_WHALES } from './index';
-import { getConfiguration } from './NetworkConfiguration';
+import { DeploySpec, ProtocolConfiguration, wait, COMP_WHALES, KompuConfiguration } from './index';
+import { getConfiguration, getKompuConfiguration } from './NetworkConfiguration';
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 
 export function sameAddress(a: string, b: string) {
@@ -300,4 +301,158 @@ export async function deployNetworkComet(
   );
 
   return { comet, configurator, rewards };
+}
+
+export async function deployNetworkKompuSimple(
+  deploymentManager: DeploymentManager,
+  deploySpec: DeploySpec = { all: true },
+  configOverrides: KompuConfiguration = {},
+  adminSigner?: SignerWithAddress,
+): Promise<Deployed> {
+  function maybeForce(flag?: boolean): boolean {
+    return deploySpec.all || flag;
+  }
+
+  const ethers = deploymentManager.hre.ethers;
+  const trace = deploymentManager.tracer();
+  const admin = adminSigner ?? await deploymentManager.getSigner();
+  const {
+    name,
+    symbol,
+    governor, // NB: generally 'timelock' alias, not 'governor'
+    pauseGuardian,
+    baseToken,
+    baseTokenPriceFeed,
+    supplyKink,
+    supplyPerYearInterestRateSlopeLow,
+    supplyPerYearInterestRateSlopeHigh,
+    supplyPerYearInterestRateBase,
+    borrowKink,
+    borrowPerYearInterestRateSlopeLow,
+    borrowPerYearInterestRateSlopeHigh,
+    borrowPerYearInterestRateBase,
+    storeFrontPriceFactor,
+    trackingIndexScale,
+    rewardKink,
+    baseTrackingRewardSpeed,
+    baseMinForRewards,
+    baseBorrowMin,
+    targetReserves,
+    assetConfigs,
+    rewardTokenAddress
+  } = await getKompuConfiguration(deploymentManager, configOverrides);
+
+  /* Deploy contracts */
+  const extConfiguration = {
+    name32: ethers.utils.formatBytes32String(name),
+    symbol32: ethers.utils.formatBytes32String(symbol)
+  };
+  const cometExt = await deploymentManager.deploy(
+    'comet:implementation:implementation',
+    'CometExt.sol',
+    [extConfiguration],
+    maybeForce(deploySpec.cometExt)
+  );
+
+  const configuration = {
+    governor,
+    pauseGuardian,
+    baseToken,
+    baseTokenPriceFeed,
+    extensionDelegate: cometExt.address,
+    supplyKink,
+    supplyPerYearInterestRateSlopeLow,
+    supplyPerYearInterestRateSlopeHigh,
+    supplyPerYearInterestRateBase,
+    borrowKink,
+    borrowPerYearInterestRateSlopeLow,
+    borrowPerYearInterestRateSlopeHigh,
+    borrowPerYearInterestRateBase,
+    storeFrontPriceFactor,
+    trackingIndexScale,
+    rewardKink,
+    baseTrackingRewardSpeed,
+    baseMinForRewards,
+    baseBorrowMin,
+    targetReserves,
+    assetConfigs,
+  };
+
+  const tmpCometImpl = await deploymentManager.deploy(
+    'comet:implementation',
+    'Kompu.sol',
+    [configuration],
+    maybeForce(deploySpec.update),
+  );
+  const cometProxy = await deploymentManager.deploy(
+    'comet',
+    'vendor/proxy/transparent/TransparentUpgradeableProxy.sol',
+    [tmpCometImpl.address, governor, []], // NB: temporary implementation contract
+    maybeForce(),
+  );
+
+  const rewards = await deploymentManager.deploy(
+    'rewards',
+    'CometRewards.sol',
+    [admin.address],
+    maybeForce(deploySpec.rewards)
+  );
+
+  /* Wire things up */
+
+  // Also get a handle for Comet, although it may not *actually* support the interface yet
+  const comet = await deploymentManager.cast(cometProxy.address, 'contracts/CometInterface.sol:CometInterface');
+
+  // Call initializeStorage if storage not initialized
+  // Note: we now rely on the fact that anyone may call, which helps separate the proposal
+  await deploymentManager.idempotent(
+    async () => (await comet.totalsBasic()).lastAccrualTime == 0,
+    async () => {
+      trace(`Initializing Comet at ${comet.address}`);
+      trace(await wait(comet.connect(admin).initializeStorage()));
+    }
+  );
+
+  // If we aren't rewards' admin, we'll need proposals to configure things
+  const amRewardsAdmin = sameAddress(await rewards.governor(), admin.address);
+
+  await deploymentManager.idempotent(
+    async () => amRewardsAdmin && governor && rewardTokenAddress !== undefined && !sameAddress((await rewards.rewardConfig(comet.address)).token, rewardTokenAddress),
+    async () => {
+      trace(`Setting reward token in CometRewards to ${rewardTokenAddress} for ${comet.address}`);
+      trace(await wait(rewards.connect(admin).setRewardConfig(comet.address, rewardTokenAddress)));
+    }
+  );
+
+  /* Transfer to Gov */
+
+  await deploymentManager.idempotent(
+    async () => amRewardsAdmin && !sameAddress(await rewards.governor(), governor),
+    async () => {
+      trace(`Transferring governor of CometRewards to ${governor}`);
+      trace(await wait(rewards.connect(admin).transferGovernor(governor)));
+    }
+  );
+
+  return { comet, cometExt, tmpCometImpl, rewards };
+}
+
+export async function makeToken(
+  deploymentManager: DeploymentManager,
+  amount: number,
+  name: string,
+  decimals: number,
+  symbol: string
+): Promise<FaucetToken> {
+  const mint = (BigInt(amount) * 10n ** BigInt(decimals)).toString();
+  return deploymentManager.deploy(symbol, 'test/FaucetToken.sol', [mint, name, decimals, symbol]);
+}
+
+export async function makePriceFeed(
+  deploymentManager: DeploymentManager,
+  alias: string,
+  initialPrice: number,
+  decimals: number
+): Promise<SimplePriceFeed> {
+  return deploymentManager.deploy(alias, 'test/SimplePriceFeed.sol', [initialPrice * 1e8, decimals]);
 }

@@ -1,0 +1,103 @@
+{
+  "name": "pnd CJPY",
+  "symbol": "pCJPY",
+  "governor": "0x0b0A167a0b6800207c89544D2eBdC98DCdD33bec",
+  "pauseGuardian": "0x153d9DD730083e53615610A0d2f6F95Ab5A0Bc01",
+  "baseToken": "CJPY",
+  "baseTokenAddress": "0x1cfa5641c01406aB8AC350dEd7d735ec41298372",
+  "baseTokenPriceFeed": "0xbce206cae7f0ec07b545edde332a47c2f75bbeb3",
+  "borrowMin": "1000e18",
+  "storeFrontPriceFactor": 0.5,
+  "targetReserves": "5_000_000e18",
+  "rewardTokenAddress": "0x5fff1443cb859e17e9a6786f7e24c369f22fd002",
+  "rates": {
+    "supplyKink": 0.9,
+    "supplySlopeLow": 0.04,
+    "supplySlopeHigh": 0.99,
+    "supplyBase": 0,
+    "borrowKink": 0.9,
+    "borrowSlopeLow": 0.025,
+    "borrowSlopeHigh": 0.99,
+    "borrowBase": 0.0275
+  },
+  "tracking": {
+    "indexScale": "1e15",
+    "rewardKink": "85e16",
+    "baseTrackingRewardSpeed": "301875e8",
+    "baseMinForRewards": "10_000_000e18"
+  },
+  "assets": {
+    "TXJP": {
+      "address": "0x961dD84059505D59f82cE4fb87D3c09bec65301d",
+      "decimals": "8",
+      "priceFeed": "0x7354FbF446fFF15Db6C7c2B8A4a84bFc092B6485",
+      "borrowCF": 0.8,
+      "liquidateCF": 0.9,
+      "liquidationFactor": 0.9,
+      "supplyCap": "100_000e8"
+    },
+    "wstETH": {
+      "address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+      "decimals": "18",
+      "priceFeed": "0x96Cf272b16d3aEC1933B593b25E3C60F173390ee",
+      "borrowCF": 0.85,
+      "liquidateCF": 0.95,
+      "liquidationFactor": 0.95,
+      "supplyCap": "50_000e18"
+    },
+    "USDC": {
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "decimals": "6",
+      "priceFeed": "0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
+      "borrowCF": 0.95,
+      "liquidateCF": 0.98,
+      "liquidationFactor": 0.985,
+      "supplyCap": "100_000_000e6"
+    },
+    "crvUSD": {
+      "address": "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+      "decimals": "18",
+      "priceFeed": "0xeef0c605546958c1f899b6fb336c20671f9cd49f",
+      "borrowCF": 0.95,
+      "liquidateCF": 0.98,
+      "liquidationFactor": 0.985,
+      "supplyCap": "100_000_000e18"
+    },
+    "UNI": {
+      "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
+      "decimals": "18",
+      "priceFeed": "0x553303d460EE0afB37EdFf9bE42922D8FF63220e",
+      "borrowCF": 0.65,
+      "liquidateCF": 0.75,
+      "liquidationFactor": 0.85,
+      "supplyCap": "1_000_000e18"
+    },
+    "CRV": {
+      "address": "0xD533a949740bb3306d119CC777fa900bA034cd52",
+      "decimals": "18",
+      "priceFeed": "0xCd627aA160A6fA45Eb793D19Ef54f5062F20f33f",
+      "borrowCF": 0.65,
+      "liquidateCF": 0.75,
+      "liquidationFactor": 0.85,
+      "supplyCap": "10_000_000e18"
+    },
+    "PND": {
+      "address": "0x5fff1443cb859e17e9a6786f7e24c369f22fd002",
+      "decimals": "18",
+      "priceFeed": "0x11ff569892Ca55846dACAa2B43C1877424ceB0CB",
+      "borrowCF": 0.6,
+      "liquidateCF": 0.7,
+      "liquidationFactor": 0.8,
+      "supplyCap": "100_000_000e18"
+    },
+    "scrvUSD": {
+      "address": "0x0655977FEb2f289A4aB78af67BAB0d17aAb84367",
+      "decimals": "18",
+      "priceFeed": "0x571323c0501b76fc1bA16b4551116248c77cCD18",
+      "borrowCF": 0.95,
+      "liquidateCF": 0.98,
+      "liquidationFactor": 0.985,
+      "supplyCap": "50_000_000e18"
+    }
+  }
+}
