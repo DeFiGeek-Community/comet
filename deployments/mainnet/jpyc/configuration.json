@@ -103,9 +103,9 @@
       "address": "0x1cfa5641c01406aB8AC350dEd7d735ec41298372",
       "decimals": "18",
       "priceFeed": "0xbce206cae7f0ec07b545edde332a47c2f75bbeb3",
-      "borrowCF": 0.95,
-      "liquidateCF": 0.98,
-      "liquidationFactor": 0.985,
+      "borrowCF": 0.75,
+      "liquidateCF": 0.8,
+      "liquidationFactor": 0.9,
       "supplyCap": "1_000_000_000e18"
     }
   }

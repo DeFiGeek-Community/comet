@@ -1,6 +1,5 @@
 {
-  "rewards": "0xA1D458530da3C4a4F0ED26BEC5E6CdE6ad0B7aC4",
-  "comet:implementation:implementation": "0x612A7Db2167E5886CBB8a6e4e275C4Ef39dFb49e",
-  "comet:implementation": "0x47AfFD2fC543880ADE70632c1aD812667CE6babF",
-  "comet": "0x68cBE77063dbCF7de7F59cD8c0051e0B2A23BF75"
+  "comet": "0x68cBE77063dbCF7de7F59cD8c0051e0B2A23BF75",
+  "comet:implementation": "0x8bAdEDCce21070C59Cb4031F4d61C1699b811aB0",
+  "rewards": "0xA1D458530da3C4a4F0ED26BEC5E6CdE6ad0B7aC4"
 }
