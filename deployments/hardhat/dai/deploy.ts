@@ -1,26 +1,5 @@
 import { Deployed, DeploymentManager } from '../../../plugins/deployment_manager';
-import { FaucetToken, SimplePriceFeed } from '../../../build/types';
-import { DeploySpec, cloneGov, deployComet, exp, sameAddress, wait } from '../../../src/deploy';
-
-async function makeToken(
-  deploymentManager: DeploymentManager,
-  amount: number,
-  name: string,
-  decimals: number,
-  symbol: string
-): Promise<FaucetToken> {
-  const mint = (BigInt(amount) * 10n ** BigInt(decimals)).toString();
-  return deploymentManager.deploy(symbol, 'test/FaucetToken.sol', [mint, name, decimals, symbol]);
-}
-
-async function makePriceFeed(
-  deploymentManager: DeploymentManager,
-  alias: string,
-  initialPrice: number,
-  decimals: number
-): Promise<SimplePriceFeed> {
-  return deploymentManager.deploy(alias, 'test/SimplePriceFeed.sol', [initialPrice * 1e8, decimals]);
-}
+import { DeploySpec, cloneGov, deployComet, exp, makePriceFeed, makeToken, sameAddress, wait } from '../../../src/deploy';
 
 // TODO: Support configurable assets as well?
 export default async function deploy(deploymentManager: DeploymentManager, deploySpec: DeploySpec): Promise<Deployed> {

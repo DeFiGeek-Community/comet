@@ -1,0 +1,57 @@
+{
+  "name": "Compound CJPY",
+  "symbol": "cCJPYv3",
+  "governor": "0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0",
+  "pauseGuardian": "0xFFcf8FDEE72ac11b5c542428B35EEF5769C409f0",
+  "baseToken": "CJPYAddress",
+  "borrowMin": "1000e18",
+  "storeFrontPriceFactor": 0.5,
+  "targetReserves": "5000000e18",
+  "rates": {
+    "supplyKink": 0.9,
+    "supplySlopeLow": 0.04,
+    "supplySlopeHigh": 0.99,
+    "supplyBase": 0,
+    "borrowKink": 0.9,
+    "borrowSlopeLow": 0.025,
+    "borrowSlopeHigh": 0.99,
+    "borrowBase": 0.0275
+  },
+  "tracking": {
+    "indexScale": "1e15",
+    "rewardKink": "85e16",
+    "baseTrackingRewardSpeed": "60375e6",
+    "baseMinForRewards": "1000000e18"
+  },
+  "rewardToken": "REWARD",
+  "assets": {
+    "TXJP": {
+      "decimals": "8",
+      "borrowCF": 0.8,
+      "liquidateCF": 0.9,
+      "liquidationFactor": 0.9,
+      "supplyCap": "100000e8"
+    },
+    "wstETH": {
+      "decimals": "18",
+      "borrowCF": 0.85,
+      "liquidateCF": 0.95,
+      "liquidationFactor": 0.95,
+      "supplyCap": "50000e18"
+    },
+    "USDC": {
+      "decimals": "6",
+      "borrowCF": 0.95,
+      "liquidateCF": 0.98,
+      "liquidationFactor": 0.95,
+      "supplyCap": "100000000e6"
+    },
+    "crvUSD": {
+      "decimals": "18",
+      "borrowCF": 0.95,
+      "liquidateCF": 0.98,
+      "liquidationFactor": 0.95,
+      "supplyCap": "100000000e18"
+    }
+  }
+}

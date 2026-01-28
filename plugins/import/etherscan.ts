@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from "axios";
 
 export interface Result {
   status: string;
@@ -8,19 +8,19 @@ export interface Result {
 
 export function getEtherscanApiUrl(network: string): string {
   let host = {
-    rinkeby: 'api-rinkeby.etherscan.io',
-    ropsten: 'api-ropsten.etherscan.io',
-    goerli: 'api-goerli.etherscan.io',
-    mainnet: 'api.etherscan.io',
-    fuji: 'api-testnet.snowtrace.io',
-    avalanche: 'api.snowtrace.io',
-    mumbai: 'api-mumbai.polygonscan.com',
-    polygon: 'api.polygonscan.com',
-    arbitrum: 'api.arbiscan.io',
-    'arbitrum-goerli': 'api-goerli.arbiscan.io',
-    base: 'api.basescan.org',
-    'base-goerli': 'api-goerli.basescan.org',
-    'linea-goerli': 'api-goerli.lineascan.build'
+    rinkeby: "api-rinkeby.etherscan.io",
+    ropsten: "api-ropsten.etherscan.io",
+    goerli: "api-goerli.etherscan.io",
+    mainnet: "api.etherscan.io/v2",
+    fuji: "api-testnet.snowtrace.io",
+    avalanche: "api.snowtrace.io",
+    mumbai: "api-mumbai.polygonscan.com",
+    polygon: "api.polygonscan.com",
+    arbitrum: "api.arbiscan.io",
+    "arbitrum-goerli": "api-goerli.arbiscan.io",
+    base: "api.basescan.org",
+    "base-goerli": "api-goerli.basescan.org",
+    "linea-goerli": "api-goerli.lineascan.build",
   }[network];
 
   if (!host) {
@@ -32,19 +32,19 @@ export function getEtherscanApiUrl(network: string): string {
 
 export function getEtherscanUrl(network: string): string {
   let host = {
-    rinkeby: 'rinkeby.etherscan.io',
-    ropsten: 'ropsten.etherscan.io',
-    goerli: 'goerli.etherscan.io',
-    mainnet: 'etherscan.io',
-    fuji: 'testnet.snowtrace.io',
-    avalanche: 'snowtrace.io',
-    mumbai: 'mumbai.polygonscan.com',
-    polygon: 'polygonscan.com',
-    arbitrum: 'arbiscan.io',
-    'arbitrum-goerli': 'goerli.arbiscan.io',
-    base: 'basescan.org',
-    'base-goerli': 'goerli.basescan.org',
-    'linea-goerli': 'goerli.lineascan.build'
+    rinkeby: "rinkeby.etherscan.io",
+    ropsten: "ropsten.etherscan.io",
+    goerli: "goerli.etherscan.io",
+    mainnet: "etherscan.io",
+    fuji: "testnet.snowtrace.io",
+    avalanche: "snowtrace.io",
+    mumbai: "mumbai.polygonscan.com",
+    polygon: "polygonscan.com",
+    arbitrum: "arbiscan.io",
+    "arbitrum-goerli": "goerli.arbiscan.io",
+    base: "basescan.org",
+    "base-goerli": "goerli.basescan.org",
+    "linea-goerli": "goerli.lineascan.build",
   }[network];
 
   if (!host) {
@@ -65,10 +65,10 @@ export function getEtherscanApiKey(network: string): string {
     mumbai: process.env.POLYGONSCAN_KEY,
     polygon: process.env.POLYGONSCAN_KEY,
     arbitrum: process.env.ARBISCAN_KEY,
-    'arbitrum-goerli': process.env.ARBISCAN_KEY,
+    "arbitrum-goerli": process.env.ARBISCAN_KEY,
     base: process.env.BASESCAN_KEY,
-    'base-goerli': process.env.BASESCAN_KEY,
-    'linea-goerli': process.env.LINEASCAN_KEY
+    "base-goerli": process.env.BASESCAN_KEY,
+    "linea-goerli": process.env.LINEASCAN_KEY,
   }[network];
 
   if (!apiKey) {
@@ -79,6 +79,6 @@ export function getEtherscanApiKey(network: string): string {
 }
 
 export async function get(url, data) {
-  const res = (await axios.get(url, { params: data }))['data'];
+  const res = (await axios.get(url, { params: data }))["data"];
   return res;
 }

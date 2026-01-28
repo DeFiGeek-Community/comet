@@ -17,11 +17,12 @@ contract Fauceteer {
         uint balance = ERC20(token).balanceOf(address(this));
         if (balance <= 0) revert BalanceTooLow();
 
-        if (block.timestamp - lastReceived[msg.sender][token] < 1 days) revert RequestedTooFrequently();
+        if (block.timestamp - lastReceived[msg.sender][token] < 1 days)
+            revert RequestedTooFrequently();
 
         lastReceived[msg.sender][token] = block.timestamp;
 
-        bool success = ERC20(token).transfer(msg.sender, balance / 10000); // 0.01%
+        bool success = ERC20(token).transfer(msg.sender, balance / 100); // 0.01%
         if (!success) revert TransferFailed();
     }
 }

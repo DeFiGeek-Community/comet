@@ -1,0 +1,76 @@
+{
+  "name": "pnd WETH",
+  "symbol": "pWETH",
+  "governor": "0x0b0A167a0b6800207c89544D2eBdC98DCdD33bec",
+  "pauseGuardian": "0x153d9DD730083e53615610A0d2f6F95Ab5A0Bc01",
+  "baseToken": "WETH",
+  "baseTokenAddress": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+  "baseTokenPriceFeed": "0x5f4ec3df9cbd43714fe2740f5e3616155c5b8419",
+  "borrowMin": "0.1e18",
+  "storeFrontPriceFactor": 0.5,
+  "targetReserves": "50_000e18",
+  "rewardTokenAddress": "0x5fff1443cb859e17e9a6786f7e24c369f22fd002",
+  "rates": {
+    "supplyKink": 0.6,
+    "supplySlopeLow": 0.022,
+    "supplySlopeHigh": 0.09,
+    "supplyBase": 0,
+    "borrowKink": 0.8,
+    "borrowSlopeLow": 0.025,
+    "borrowSlopeHigh": 0.06,
+    "borrowBase": 0.02
+  },
+  "tracking": {
+    "indexScale": "1e15",
+    "rewardKink": "80e16",
+    "baseTrackingRewardSpeed": "322161e6",
+    "baseMinForRewards": "300e18"
+  },
+  "assets": {
+    "TXJP": {
+      "address": "0x961dD84059505D59f82cE4fb87D3c09bec65301d",
+      "decimals": "8",
+      "priceFeed": "0x7354FbF446fFF15Db6C7c2B8A4a84bFc092B6485",
+      "borrowCF": 0.8,
+      "liquidateCF": 0.9,
+      "liquidationFactor": 0.9,
+      "supplyCap": "100_000e8"
+    },
+    "wstETH": {
+      "address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+      "decimals": "18",
+      "priceFeed": "0x96Cf272b16d3aEC1933B593b25E3C60F173390ee",
+      "borrowCF": 0.85,
+      "liquidateCF": 0.95,
+      "liquidationFactor": 0.9,
+      "supplyCap": "50_000e18"
+    },
+    "USDC": {
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "decimals": "6",
+      "priceFeed": "0x8fffffd4afb6115b954bd326cbe7b4ba576818f6",
+      "borrowCF": 0.85,
+      "liquidateCF": 0.95,
+      "liquidationFactor": 0.9,
+      "supplyCap": "100_000_000e6"
+    },
+    "crvUSD": {
+      "address": "0xf939e0a03fb07f59a73314e73794be0e57ac1b4e",
+      "decimals": "18",
+      "priceFeed": "0xeef0c605546958c1f899b6fb336c20671f9cd49f",
+      "borrowCF": 0.85,
+      "liquidateCF": 0.95,
+      "liquidationFactor": 0.9,
+      "supplyCap": "100_000_000e18"
+    },
+    "CJPY": {
+      "address": "0x1cfa5641c01406aB8AC350dEd7d735ec41298372",
+      "decimals": "18",
+      "priceFeed": "0xbce206cae7f0ec07b545edde332a47c2f75bbeb3",
+      "borrowCF": 0.85,
+      "liquidateCF": 0.95,
+      "liquidationFactor": 0.9,
+      "supplyCap": "1_000_000_000e18"
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import { AssetConfigStruct } from '../../build/types/Comet';
 import { BigNumberish, Contract, PopulatedTransaction } from 'ethers';
 
-export { cloneGov, deployNetworkComet as deployComet, sameAddress } from './Network';
-export { getConfiguration, getConfigurationStruct } from './NetworkConfiguration';
+export { cloneGov, deployNetworkComet as deployComet, deployNetworkKompuSimple as deployKompuSimple, sameAddress, makeToken, makePriceFeed } from './Network';
+export { getConfiguration, getConfigurationStruct, getKompuConfiguration } from './NetworkConfiguration';
 export { exp, getBlock, wait } from '../../test/helpers';
 export { debug } from '../../plugins/deployment_manager/Utils';
 
@@ -33,6 +33,33 @@ export interface ProtocolConfiguration {
   rewardTokenAddress?: string;
 }
 
+export interface KompuConfiguration {
+  name?: string;
+  symbol?: string;
+  governor?: string;
+  pauseGuardian?: string;
+  baseToken?: string;
+  baseTokenPriceFeed?: string;
+  extensionDelegate?: string;
+  supplyKink?: BigNumberish;
+  supplyPerYearInterestRateBase?: BigNumberish;
+  supplyPerYearInterestRateSlopeLow?: BigNumberish;
+  supplyPerYearInterestRateSlopeHigh?: BigNumberish;
+  borrowKink?: BigNumberish;
+  borrowPerYearInterestRateBase?: BigNumberish;
+  borrowPerYearInterestRateSlopeLow?: BigNumberish;
+  borrowPerYearInterestRateSlopeHigh?: BigNumberish;
+  storeFrontPriceFactor?: BigNumberish;
+  trackingIndexScale?: BigNumberish;
+  rewardKink?: BigNumberish;
+  baseTrackingRewardSpeed?: BigNumberish;
+  baseMinForRewards?: BigNumberish;
+  baseBorrowMin?: BigNumberish;
+  targetReserves?: BigNumberish;
+  assetConfigs?: AssetConfigStruct[];
+  rewardTokenAddress?: string;
+}
+
 // If `all` is specified, it takes precedence.
 // Other options are independent of one another.
 export interface DeploySpec {
@@ -40,6 +67,7 @@ export interface DeploySpec {
   cometMain?: boolean; // Re-deploy the main interface (config impl + comet factory + comet impl)
   cometExt?: boolean; // Re-deploy the ext interface (comet ext)
   rewards?: boolean; // Re-deploy the rewards contract
+  update?: boolean; // Apply incremental updates to existing deployments
 }
 
 export interface ContractAction {
